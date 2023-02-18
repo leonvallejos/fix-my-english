@@ -6,7 +6,7 @@ export async function checkIsEnglish(input){
   const data = {
     texts: [input],
   }
-  const response = await fetch(COHERE_API_DETECT_LANGUAGE_URL, {
+  const {results} = await fetch(COHERE_API_DETECT_LANGUAGE_URL, {
     method: 'POST',
     headers: {
       Acccept: 'application/json',
@@ -17,7 +17,8 @@ export async function checkIsEnglish(input){
     body: JSON.stringify(data)
   }).then(res => res.json())
 
-  const {language} = response
+  const {language_code} = results
+  return language_code === 'en'
 }
 
 
